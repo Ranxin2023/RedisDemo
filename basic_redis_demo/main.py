@@ -22,10 +22,20 @@ def mset_demo():
 
 def hash_demo():
     print("-------hash demo--------")
-    r.hset("user:1001", "name", "John")
-    r.hset("user:1001", "age", 25)
-    name=r.hget("user:1001", "name")
-    print(f"name from hash demo user:1001 is {name}")
+    # user_data={"name":"John", "age":"25", "city":"Davis"}
+    # , "age":"25", "city":"Davis"
+    r.hset(name="user:1002", mapping={"name":"John"})
+    r.hset(name="user:1002", mapping={"age":25})
+    r.hset(name="user:1002", mapping={"city":"Davis"})
+    user=r.hgetall("user:1002")
+    print(f"user in hash demo is {user}")
+    r.hset("user:1002", "age", 26)
+    r.hset("user:1002", "score", 100)
+    r.hincrby("user:1002", "score", 10)
+    score=r.hget("user:1002", "score")
+    name=r.hget("user:1002", "name")
+    print(f"name from hash demo user:1002 is {name} with score of {score}")
+
 def main():
 
     r.set("name", "John")
