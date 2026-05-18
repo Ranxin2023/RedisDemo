@@ -1,0 +1,27 @@
+from redis_connection import r
+def get_all_skills():
+    return r.smembers("skills")
+
+def set_demo():
+    print("------------------set demo------------------")
+    r.sadd("skills", "redis", "python", "backend")
+    skills=get_all_skills()
+    print(f"Skills initialized are {skills}")
+    r.sadd("skills", "python")
+    skills=get_all_skills()
+    print(f"Skills after adding python(exists)are {skills}")
+    r.sadd("skills", "Java")
+    skills=get_all_skills()
+    print(f"Skills after adding java are {skills}")
+    r.sadd("skills", "JavaScript")
+    skills=get_all_skills()
+    print(f"Skills after adding javascript are {skills}")
+    r.srem("skills", "JavaScript")
+    skills=get_all_skills()
+    print(f"Skills after deleting javascript are {skills}")
+    num_of_skills=r.scard("skills")
+    print(f"Number of skills is {num_of_skills}")
+    python_exists=r.sismember("skills", "python")
+    print(f"Python exists in skills: {python_exists}")
+    c_shart_exists=r.sismember("skills", "C#")
+    print(f"C# exists in skills: {c_shart_exists}")
