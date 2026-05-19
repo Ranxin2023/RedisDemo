@@ -21,4 +21,58 @@ dump.rdb
 #### Disadvantages of RDB
 - Possible data loss
 ### RDB Demo
-- 
+```python
+import redis
+
+r = redis.Redis(
+    host='localhost',
+    port=6379,
+    decode_responses=True
+)
+
+# clear database
+r.flushdb()
+
+# add data
+r.set("name", "John")
+r.set("city", "Davis")
+
+print(r.keys("*"))
+
+# force RDB save
+r.save()
+
+print("RDB snapshot created.")
+```
+
+### 2. AOF (Append Only File)
+#### Concept
+- AOF logs: **every write command** that modifies Redis data.
+
+-  Example:
+```redis
+SET name John
+SET age 25
+HSET user city Davis
+```
+
+- These commands are appended into:`appendonly.aof`
+- When Redis restarts:
+    - it replays all commands
+    - reconstructs the dataset
+
+#### How AOF Works
+- Enable AOF:
+```config
+appendonly yes
+```
+#### AOF Sync Policies
+```conf
+appendfsync always
+```
+#### Advantages of AOF
+- Better durability
+    - Usually loses at most:**1 second of data**
+- Human-readable log
+    - You can inspect commands.
+
