@@ -48,6 +48,7 @@ Application → Memory (RAM)
 
 - Memory access is much faster than disk access.
 - Typical performance:
+
 | **Database** | **Speed**        |
 | -------- | ------------ |
 | MySQL    | milliseconds |
